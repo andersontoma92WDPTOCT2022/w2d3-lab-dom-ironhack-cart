@@ -54,8 +54,50 @@ function removeProduct(event) {
 
 // ITERATION 5
 
-function createProduct() {
+function createProduct(event) {
   //... your code goes here
+  const tbody = document.getElementsByTagName('tbody');
+  console.log(tbody, 'table body');
+  let tr = document.createElement('tr');
+  tr.classList.add('product');
+  console.log(tr, '< new row gerado');
+  let trCriadoAppended = tbody[0].appendChild(tr);
+  console.log(trCriadoAppended, 'tr appended');
+  console.log(tbody, 'tbody');
+  //let produtoBase = event.currentTarget.parentElement.parentElement;
+  let productName = document.querySelector('[placeholder="Product Name"]');
+  console.log(productName.value, '<--productName');
+  //let test = document.querySelector('Product Name');
+  //console.log(test, '<<---- query');
+  let productPrice = document.querySelector('[placeholder="Product Price"]');
+  console.log(productPrice.value, '<--productPrice');
+  //console.log(produtoBase, 'pai da linha ser copiada');
+
+  // formando o novo td
+
+  let incluirTR = `<td class="name">
+    <span>${productName.value}</span>
+   </td>
+    <td class="price">$<span>${productPrice.value}</span></td>
+    <td class="quantity">
+    <input type="number" value="0" min="0" placeholder="Quantity" />
+   </td>
+    <td class="subtotal">$<span>0</span></td>
+    <td class="action">
+    <button class="btn btn-remove">Remove</button>
+   </td>`;
+  trCriadoAppended.innerHTML = incluirTR;
+
+  //pegando novo botão do novo produto
+  let Novobotao = trCriadoAppended.getElementsByTagName('button');
+
+  console.log(Novobotao, '<<<--novo button');
+
+  Novobotao[0].addEventListener('click', removeProduct);
+  //---------------- zerando o footer
+  productName.value = '';
+  productPrice.value = '0';
+  //-------------------
 }
 
 window.addEventListener('load', () => {
@@ -70,4 +112,6 @@ window.addEventListener('load', () => {
     console.log(element, 'escutando');
   });
   //removeProductBtn.addEventListener('click', removeProduct);
+  const createBtn = document.getElementById('create');
+  createBtn.addEventListener('click', createProduct);
 });
